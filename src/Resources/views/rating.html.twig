@@ -1,0 +1,18 @@
+{% set last = 0 %}
+{% for i in 1..value %}
+    <i class="fa fa-star" style="color: coral"></i>
+    {% set last = i %}
+{% endfor %}
+
+{% set diff = value - last %}
+{% if diff > 0 %}
+<i  style="color: coral"class="fa fa-star-half-alt"></i>
+{% endif %}
+
+{% set max_diff = max - value %}
+
+{% for i in 0..max_diff|round(0, 'floor') %}
+    {% if (i != 0) %}
+    <i class="fa fa-star"></i>
+    {% endif %}
+{% endfor %}
