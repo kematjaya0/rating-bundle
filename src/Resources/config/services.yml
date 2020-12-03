@@ -6,3 +6,6 @@ services:
 
     Kematjaya\RatingBundle\Twig\RatingExtension:
         tags: ['twig.extension']
+        
+    Kematjaya\RatingBundle\Calculator\RatingCalculator:
+        class: Kematjaya\RatingBundle\Calculator\RatingCalculator
