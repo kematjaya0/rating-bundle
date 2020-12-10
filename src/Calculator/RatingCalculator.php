@@ -4,7 +4,7 @@ namespace Kematjaya\RatingBundle\Calculator;
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
  */
-class RatingCalculator 
+class RatingCalculator implements RatingCalculatorInterface
 {
     /**
      *
@@ -17,7 +17,7 @@ class RatingCalculator
         return $this->scale;
     }
     
-    public function setScale(int $scale):self
+    public function setScale(int $scale):RatingCalculatorInterface
     {
         $this->scale = $scale;
         

@@ -4,8 +4,11 @@ services:
         autoconfigure: true
         public: false
 
+    Kematjaya\RatingBundle\Calculator\RatingCalculatorInterface:
+        class: Kematjaya\RatingBundle\Calculator\RatingCalculator
+        
+    Kematjaya\RatingBundle\Helper\AbstractRatingHelper:
+        class: Kematjaya\RatingBundle\Helper\RatingHelper
+
     Kematjaya\RatingBundle\Twig\RatingExtension:
         tags: ['twig.extension']
-        
-    Kematjaya\RatingBundle\Calculator\RatingCalculator:
-        class: Kematjaya\RatingBundle\Calculator\RatingCalculator

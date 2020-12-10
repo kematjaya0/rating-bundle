@@ -2,11 +2,9 @@
 
 namespace Kematjaya\RatingBundle\Twig;
 
-use Kematjaya\RatingBundle\Calculator\RatingCalculator;
+use Kematjaya\RatingBundle\Helper\AbstractRatingHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Exception;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author Nur Hidayatullah <kematjaya0@gmail.com>
@@ -14,17 +12,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RatingExtension extends AbstractExtension 
 {
     /**
-     *
-     * @var ContainerInterface
+     * 
+     * @var AbstractRatingHelper
      */
-    private $container;
+    private $helper;
     
-    private $calculator;
-    
-    public function __construct(ContainerInterface $container, RatingCalculator $calculator) 
+    public function __construct(AbstractRatingHelper $helper) 
     {
-        $this->container = $container;
-        $this->calculator = $calculator;
+        $this->helper = $helper;
     }
     
     public function getFunctions()
@@ -37,35 +32,22 @@ class RatingExtension extends AbstractExtension
     
     public function convert(float $value, float $maxValue, float $max = null):float
     {
-        if($max)
-        {
-            $this->calculator->setScale($max);
+        if($max) {
+            $this->helper->getCalculator()->setScale($max);
         }
         
-        return $this->calculator->convert($value, $maxValue);
+        return $this->helper->getCalculator()->convert($value, $maxValue);
     }
     
-    public function renderRating(float $value, int $max = null)
+    /**
+     * render rating html using helper
+     * @param float $value
+     * @param int $max
+     * @return type
+     */
+    public function renderRating(float $value, int $max = null):string
     {
-        if(!$this->container->has('twig'))
-        {
-            throw new Exception(sprintf('template engine is not installed, try %s', 'composer require twig'));
-        }
-        
-        if($max)
-        {
-            $this->calculator->setScale($max);
-        }
-        
-        $max = $this->calculator->getScale();
-        if($value > $max)
-        {
-            throw new Exception(sprintf("%s greather than %s", $value, $max));
-        }
-        
-        return $this->container->get('twig')->render('@Rating/rating.html.twig', [
-            'value' => $value, 'max' => $max
-        ]);
+        return $this->helper->render($value, $max);
     }
     
 }

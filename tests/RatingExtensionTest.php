@@ -2,6 +2,9 @@
 
 namespace Kematjaya\RatingBundle\Test;
 
+use Kematjaya\RatingBundle\Exception\InvalidValueException;
+use Kematjaya\RatingBundle\Helper\RatingHelper;
+use Kematjaya\RatingBundle\Helper\RatingHelperInterface;
 use Kematjaya\RatingBundle\Calculator\RatingCalculator;
 use Kematjaya\RatingBundle\Twig\RatingExtension;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,29 +16,54 @@ use Exception;
  */
 class RatingExtensionTest extends WebTestCase 
 {
-    public function testRenderException()
+    public function testInstanceHelper():RatingHelperInterface
     {
         $client = parent::createClient();
         $container = $client->getContainer();
-        $ext = new RatingExtension($container, new RatingCalculator());
-        $this->expectException(Exception::class);
+        $helper = new RatingHelper($container, new RatingCalculator());
+        $this->assertInstanceOf(RatingHelperInterface::class, $helper);
+        
+        return $helper;
+    }
+    
+    /**
+     * @depends testInstanceHelper
+     */
+    public function testRenderException(RatingHelperInterface $helper)
+    {
+        $this->expectException(InvalidValueException::class);
         $this->expectExceptionMessage('10 greather than 5');
-        $ext->renderRating(10);
+        $helper->render(10);
     }
     
-    public function testRenderNormal()
+    /**
+     * @depends testInstanceHelper
+     */
+    public function testRenderSuccess(RatingHelperInterface $helper)
     {
-        $client = parent::createClient();
-        $container = $client->getContainer();
-        $ext = new RatingExtension($container, new RatingCalculator());
-        $this->assertTrue(is_string($ext->renderRating(4)));
+        $this->assertIsString($helper->render(1));
+        $this->assertIsString($helper->render(2));
+        $this->assertIsString($helper->render(3));
+        $this->assertIsString($helper->render(4));
+        $this->assertIsString($helper->render(5));
     }
     
-    public function testRenderConvert()
+    private function renderStar(int $offset)
     {
-        $client = parent::createClient();
-        $container = $client->getContainer();
-        $ext = new RatingExtension($container, new RatingCalculator());
+        $html = '';
+        for($i = 0; $i< $offset; $i++) {
+            $html .= '<i class="fa fa-star" style="color: coral"></i>';
+        }
+        
+        return $html;
+    }
+  
+    /**
+     * @depends testInstanceHelper
+     */
+    public function testRenderConvert(RatingHelperInterface $helper)
+    {
+        $ext = new RatingExtension($helper);
         
         $this->assertEquals(1, $ext->convert(20, 100));
         $this->assertEquals(1.5, $ext->convert(30, 100));
