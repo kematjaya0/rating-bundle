@@ -17,8 +17,9 @@ class RatingHelper extends AbstractRatingHelper
      * @return string
      * @throws InvalidValueException
      */
-    public function render(float $value, int $max = null): string 
+    public function render(float $value = 0, int $max = null): string 
     {
+        $value = ($value >= 0) ? $value : 0;
         if($max) {
             $this->getCalculator()->setScale($max);
         }

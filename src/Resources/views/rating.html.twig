@@ -1,6 +1,8 @@
 {% set last = 0 %}
-{% for i in 1..value %}
+{% for i in 0..value %}
+    {% if (i != 0) %}
     <i class="fa fa-star" style="color: coral"></i>
+    {% endif %}
     {% set last = i %}
 {% endfor %}
 

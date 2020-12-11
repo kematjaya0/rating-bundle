@@ -30,7 +30,7 @@ class RatingExtension extends AbstractExtension
         ];
     }
     
-    public function convert(float $value, float $maxValue, float $max = null):float
+    public function convert(float $value = 0, float $maxValue, float $max = null):float
     {
         if($max) {
             $this->helper->getCalculator()->setScale($max);
@@ -43,9 +43,9 @@ class RatingExtension extends AbstractExtension
      * render rating html using helper
      * @param float $value
      * @param int $max
-     * @return type
+     * @return string
      */
-    public function renderRating(float $value, int $max = null):string
+    public function renderRating(float $value = 0, int $max = null):string
     {
         return $this->helper->render($value, $max);
     }
