@@ -9,6 +9,8 @@ services:
         
     Kematjaya\RatingBundle\Helper\AbstractRatingHelper:
         class: Kematjaya\RatingBundle\Helper\RatingHelper
+        
+    Kematjaya\RatingBundle\Type\RatingType: ~
 
     Kematjaya\RatingBundle\Twig\RatingExtension:
         tags: ['twig.extension']
