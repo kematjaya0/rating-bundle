@@ -1,20 +1,20 @@
 {% set last = 0 %}
 {% for i in -1..value %}
     {% if (i > 0) %}
-    <i class="fa fa-star" style="color: coral"></i>
+    <i class="{{ attributes.fillIcon }}" style="color: coral"></i>
     {% endif %}
     {% set last = i %}
 {% endfor %}
 
 {% set diff = value - last %}
 {% if diff > 0 %}
-<i  style="color: coral"class="fa fa-star-half-alt"></i>
+<i  style="color: coral"class="{{ attributes.emptyIcon }}"></i>
 {% endif %}
 
 {% set max_diff = max - value %}
 
 {% for i in 0..max_diff|round(0, 'floor') %}
     {% if (i != 0) %}
-    <i class="fa fa-star"></i>
+    <i class="{{ attributes.emptyIcon }}"></i>
     {% endif %}
 {% endfor %}

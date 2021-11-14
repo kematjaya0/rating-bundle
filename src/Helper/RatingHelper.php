@@ -17,7 +17,7 @@ class RatingHelper extends AbstractRatingHelper
      * @return string
      * @throws InvalidValueException
      */
-    public function render(float $value = 0, int $max = null): string 
+    public function render(float $value = 0, int $max = null, array $attributes = []): string 
     {
         $value = ($value >= 0) ? $value : 0;
         if($max) {
@@ -29,8 +29,11 @@ class RatingHelper extends AbstractRatingHelper
             throw new InvalidValueException($value, $max);
         }
         
+        $attributes['fillIcon'] = (isset($attributes['fillIcon'])) ? $attributes['fillIcon'] : 'fa fa-star';
+        $attributes['emptyIcon'] = (isset($attributes['emptyIcon'])) ? $attributes['emptyIcon'] : 'fa fa-star';
+        
         return $this->getContainer()->get('twig')->render('@Rating/rating.html.twig', [
-            'value' => $value, 'max' => $max
+            'value' => $value, 'max' => $max, 'attributes' => $attributes
         ]);
     }
 

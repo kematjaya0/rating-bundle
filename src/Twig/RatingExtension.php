@@ -45,9 +45,9 @@ class RatingExtension extends AbstractExtension
      * @param int $max
      * @return string
      */
-    public function renderRating(float $value = 0, int $max = null):string
+    public function renderRating(float $value = 0, int $max = null, array $attributes = []):string
     {
-        return $this->helper->render($value, $max);
+        return $this->helper->render($value, $max, $attributes);
     }
     
 }

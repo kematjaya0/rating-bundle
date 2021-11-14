@@ -7,5 +7,5 @@ namespace Kematjaya\RatingBundle\Helper;
  */
 interface RatingHelperInterface 
 {
-    public function render(float $value = 0, int $max = null):string;
+    public function render(float $value = 0, int $max = null, array $attributes = []):string;
 }
