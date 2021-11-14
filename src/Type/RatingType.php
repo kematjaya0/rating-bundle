@@ -7,8 +7,10 @@
 
 namespace Kematjaya\RatingBundle\Type;
 
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -16,14 +18,39 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author guest
  */
-class RatingType extends AbstractType
+class RatingType extends AbstractType implements DataTransformerInterface
 {
+    /**
+    * {@inheritdoc}
+    */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addModelTransformer($this);
+    }
+    
+    /**
+    * {@inheritdoc}
+    */
+    public function transform($data = null)
+    {
+        return (float) $data;
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function reverseTransform($data)
+    {
+        return (float) $data;
+    }
+    
     public function configureOptions(OptionsResolver $resolver)
     {
         $maxValue = 5;
+        $choice = array_reverse(range(0, $maxValue));
         $choices = array_combine(
-            array_reverse(range(1, $maxValue)), 
-            array_reverse(range(1, $maxValue))
+            $choice, 
+            $choice
         );
         
         $resolver->setDefaults([

@@ -1,9 +1,11 @@
 {% block rating_widget %}
     
     <div class="rating"> 
-        {% for child in form %}
+        {% for child in form  %}
+            {% if 0 !=child.vars.value %}
             <input type="radio" name="{{ form.vars.full_name }}" value="{{ child.vars.value }}" id="{{ child.vars.id }}"/>
             <label for="{{ child.vars.id }}">☆</label>
+            {% endif %}
         {% endfor %}
     </div>
     <style>
