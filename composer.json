@@ -2,6 +2,7 @@
     "name": "kematjaya/rating-bundle",
     "type": "library",
     "license": "MIT",
+    "description": "bundle for generate rating",
     "authors": [
         {
             "name": "Nur Hidayatullah",

@@ -30,6 +30,7 @@ class RatingType extends AbstractType implements DataTransformerInterface
     
     /**
     * {@inheritdoc}
+     * @return mixed Description
     */
     public function transform($data = null)
     {
@@ -38,6 +39,7 @@ class RatingType extends AbstractType implements DataTransformerInterface
 
     /**
     * {@inheritdoc}
+     * @return mixed Description
     */
     public function reverseTransform($data)
     {
@@ -64,12 +66,17 @@ class RatingType extends AbstractType implements DataTransformerInterface
     
     /**
      * {@inheritdoc}
+     * @return string Description
      */
     public function getBlockPrefix()
     {
         return 'rating';
     }
     
+    /**
+     * 
+     * @return string
+     */
     public function getParent()
     {
         return ChoiceType::class;

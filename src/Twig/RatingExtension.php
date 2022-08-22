@@ -22,7 +22,7 @@ class RatingExtension extends AbstractExtension
         $this->helper = $helper;
     }
     
-    public function getFunctions()
+    public function getFunctions():array
     {
         return [
             new TwigFunction('rating', [$this, 'renderRating'], ['is_safe' => ['html']]),
